@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CertiGen | Bulk Certificate Generator</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <span class="brand-icon">C</span>
+        <span>CertiGen<small>CERTIFICATE STUDIO</small></span>
+      </a>
+
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-link active" href="/">
+        <span>▦</span> Generate certificates
+      </a>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-note">
+          <span class="status-dot"></span>
+          <div><strong>Local workspace</strong><small>FastAPI backend</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">CERTIFICATE MANAGEMENT</p>
+          <h1>Bulk certificate generator</h1>
+        </div>
+        <a class="api-link" href="/docs" target="_blank" rel="noreferrer">
+          API documentation ↗
+        </a>
+      </header>
+
+      <section class="welcome">
+        <div>
+          <span class="welcome-tag">YOUR CERTIFICATE WORKSPACE</span>
+          <h2>Celebrate every achievement.</h2>
+          <p>Upload a recipient list and generate personalized certificates in one place.</p>
+        </div>
+        <div class="welcome-symbol" aria-hidden="true">✦</div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="panel upload-panel">
+          <div class="panel-heading">
+            <div class="step-number">01</div>
+            <div>
+              <h2>Create certificates</h2>
+              <p>Provide your event details and recipient file.</p>
+            </div>
+          </div>
+
+          <form id="upload-form">
+            <label for="event-name">Event or workshop name</label>
+            <input
+              id="event-name"
+              name="event_name"
+              type="text"
+              placeholder="e.g. Python Workshop"
+              maxlength="200"
+              required
+            >
+
+            <label for="recipient-file">Recipient spreadsheet</label>
+            <label class="drop-zone" for="recipient-file" id="drop-zone">
+              <span class="file-icon">↥</span>
+              <strong id="file-title">Choose an Excel or CSV file</strong>
+              <span id="file-description">Click here to browse your computer</span>
+              <span class="file-types">XLSX · CSV</span>
+            </label>
+            <input
+              class="visually-hidden"
+              id="recipient-file"
+              name="file"
+              type="file"
+              accept=".xlsx,.csv"
+              required
+            >
+
+            <div class="format-note">
+              <strong>Spreadsheet format</strong>
+              <p>Your first row must contain these column headings:</p>
+              <code>name</code> <code>email</code>
+            </div>
+
+            <button class="primary-button" id="generate-button" type="submit">
+              <span id="button-text">Upload &amp; generate certificates</span>
+              <span aria-hidden="true"> →</span>
+            </button>
+
+            <p class="privacy-note">Your file is processed by your local FastAPI server.</p>
+          </form>
+        </div>
+
+        <div class="right-column">
+          <div class="panel info-panel">
+            <span class="info-icon">✧</span>
+            <h2>How it works</h2>
+            <ol>
+              <li><span>1</span><div><strong>Upload your list</strong><p>Select an Excel or CSV file.</p></div></li>
+              <li><span>2</span><div><strong>Generate PDFs</strong><p>Your backend creates certificates.</p></div></li>
+              <li><span>3</span><div><strong>Download files</strong><p>Save each certificate to your device.</p></div></li>
+            </ol>
+          </div>
+
+          <div class="panel tip-panel">
+            <span>✦ QUICK TIP</span>
+            <p>Check names and email addresses before uploading to reduce failed certificates.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel results-panel" id="results-panel" hidden>
+        <div class="results-heading">
+          <div>
+            <p class="eyebrow">GENERATION REPORT</p>
+            <h2 id="result-title">Your results</h2>
+            <p id="result-message" role="status" aria-live="polite"></p>
+          </div>
+          <span class="result-status" id="result-status">Completed</span>
+        </div>
+
+
+
+<button type="button" id="downloadAllBtn">
+    Download All Certificates (ZIP)
+</button>
+
+
+
+
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span>Total recipients</span>
+            <strong id="total-count">0</strong>
+          </div>
+          <div class="stat-card">
+            <span>Successful</span>
+            <strong id="success-count">0</strong>
+          </div>
+          <div class="stat-card">
+            <span>Failed</span>
+            <strong id="failure-count">0</strong>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Recipient</th><th>Status</th><th>Certificate</th></tr>
+            </thead>
+            <tbody id="recipient-results"></tbody>
+          </table>
+        </div>
+
+        <details class="technical-details">
+          <summary>View API response</summary>
+          <pre id="raw-response"></pre>
+        </details>
+      </section>
+
+      <footer>CertiGen · Bulk Certificate Generator · Powered by FastAPI</footer>
+    </main>
+  </div>
+</body>
+</html>
